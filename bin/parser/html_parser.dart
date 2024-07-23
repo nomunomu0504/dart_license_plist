@@ -12,10 +12,29 @@ import 'package:html/dom.dart';
 
 /// A class that html parser.
 class HtmlParser {
-  static Element? parseLicenseDom(Document html) {
-    return html.querySelectorAll("a").firstWhereOrNull(
-          (dom) => dom.text == "LICENSE" || dom.text == "LICENSE.md",
-        );
+  static List<Element>? parseLicenseDom(Document html) {
+    return html
+        .querySelectorAll("a")
+        .where(
+          (dom) =>
+              dom.text.toLowerCase() == "license" ||
+              dom.text.toLowerCase() == "license.md",
+        )
+        .toList();
+  }
+
+  static Element? parseLicenseDomWithName(Document html, String packageName) {
+    return html
+        .querySelectorAll("a")
+        .where(
+          (dom) =>
+              (dom.attributes["href"] ?? "")
+                  .toLowerCase()
+                  .contains(packageName.toLowerCase()) &&
+              (dom.text.toLowerCase() == "license" ||
+                  dom.text.toLowerCase() == "license.md"),
+        )
+        .firstOrNull;
   }
 
   static Element? parseLicenseTextDom(Document html) {

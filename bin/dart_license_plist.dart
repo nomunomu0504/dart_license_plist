@@ -7,17 +7,17 @@
  * http://opensource.org/licenses/mit-license.php
  */
 
-import 'package:html/parser.dart';
 import 'package:html/dom.dart';
+import 'package:html/parser.dart';
 import 'package:pub_updater/pub_updater.dart';
 import 'package:yaml/yaml.dart';
 
+import 'client/http_client.dart' as client;
+import 'common/consts.dart';
 import 'common/logger.dart';
 import 'common/utils.dart' as utils;
-import 'common/consts.dart';
 import 'entity/license_info.dart';
 import 'entity/package_info.dart';
-import 'client/http_client.dart' as client;
 import 'extension/string_extension.dart';
 import 'manager/plist_manager.dart';
 import 'manager/yaml_manager.dart';
@@ -178,7 +178,7 @@ Future<void> main(List<String> arguments) async {
     // skip custom license package name
     if (_customLicensePackageNameList.contains(packageName)) {
       Logger.info(
-        "$packageName exsits in custom license yaml. Fetch Skipping...",
+        "$packageName exists in custom license yaml. Fetch Skipping...",
       );
       continue;
     }
@@ -204,7 +204,10 @@ Future<void> main(List<String> arguments) async {
       // package page html string to package page html document
       final Document siteHtml = parse(siteHtmlString);
       // get license link dom from html document
-      final Element? licenseDom = parser.HtmlParser.parseLicenseDom(siteHtml);
+      final Element? licenseDom = parser.HtmlParser.parseLicenseDomWithName(
+        siteHtml,
+        packageName,
+      );
 
       /// go next loop if license dom is null or license link is not found
       if (licenseDom == null || licenseDom.attributes["href"] == null) {
