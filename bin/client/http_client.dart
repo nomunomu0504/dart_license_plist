@@ -8,8 +8,8 @@
  */
 
 import 'dart:io';
-import 'package:http/http.dart' as http;
 
+import 'package:http/http.dart' as http;
 import 'package:yaml/yaml.dart';
 
 import '../common/consts.dart';
@@ -44,7 +44,7 @@ class HttpClient {
         await http.get(uri, headers: {"Content-Type": "text/html"});
 
     if (response.isRedirect || shouldRedirect) {
-      final String? location = response.headers["localtion"];
+      final String? location = response.headers["location"];
       if (location != null && location.contains("api.flutter.dev")) {
         final redirectUrl =
             "$flutterApiUrl/$packageName/$packageName-library.html";
