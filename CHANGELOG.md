@@ -43,3 +43,8 @@
 # 1.1.3
 
 - Fix create plist function.
+
+# 1.2.0
+
+- Bug Fix: Parsing Logic
+  - Corrected an issue where certain edge cases were not being parsed correctly, leading to potential data inaccuracies. The logic has been adjusted to ensure all cases are handled as expected.
